@@ -5,7 +5,6 @@ Communication between phone and wear in a simple way by using coroutines.
 ## Dependencies
 ```gradle
 implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
-compileOnly "com.google.android.wearable:wearable:$wearable_version"
 implementation "com.google.android.gms:play-services-wearable:$gms_wearable_version"
 ```
 ## Usage
