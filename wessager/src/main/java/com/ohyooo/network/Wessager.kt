@@ -1,6 +1,7 @@
 package com.ohyooo.network
 
 import android.content.Context
+import android.util.Log
 import com.google.android.gms.wearable.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
@@ -66,9 +67,11 @@ object Wessager : DataClient.OnDataChangedListener {
                         val sessionId = getLong(Constants.SESSION_ID)
                         val expireTime = getLong(Constants.EXPIRE_TIME)
                         if (sessionId <= 0 || expireTime < System.currentTimeMillis()) {
+                            Log.e("Wessager", String.format("received expired: sessionId=%s", sessionId))
                             return
                         }
                         val payload = getString(Constants.PAYLOAD)
+                        Log.e("Wessager", String.format("received: sessionId=%s payload=%s", sessionId, payload))
                         if (register.containsKey(sessionId)) {
                             register[sessionId]!!.invoke(payload)
                             register.remove(sessionId)

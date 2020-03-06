@@ -7,6 +7,7 @@ import com.ohyooo.lib.mvvm.MVVMBaseViewModel
 import com.ohyooo.network.OnMessageReceivedListener
 import com.ohyooo.network.Wessager
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.util.Date
 
 class MainViewModel : MVVMBaseViewModel() {
@@ -27,7 +28,8 @@ class MainViewModel : MVVMBaseViewModel() {
 
     fun sendToWear() {
         viewModelScope.launch {
-            Wessager.send("send from phone", false)
+            val resp = Wessager.send("send from phone", true)
+            Timber.e(resp)
         }
     }
 

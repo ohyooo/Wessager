@@ -35,6 +35,7 @@ task clean(type: Delete) {
 
 ext {
     applicationId = "com.ohyooo.wessager"
+    buildToolsVersion = "29.0.3"
     compileSdkVersion = 29
     minSdkVersion = 24
     targetSdkVersion = 29
