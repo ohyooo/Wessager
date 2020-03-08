@@ -49,5 +49,4 @@ android {
 
 dependencies {
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_extension"
 }
