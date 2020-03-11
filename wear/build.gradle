@@ -54,9 +54,6 @@ dependencies {
     implementation project(':wessager')
     compileOnly "com.google.android.wearable:wearable:$wearable_version"
     implementation "com.google.android.gms:play-services-wearable:$gms_wearable_version"
-    // ViewModel and LiveData
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_extension"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_extension"
     //
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     //
