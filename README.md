@@ -1,6 +1,7 @@
 # Wessager
 Wessager is wear messager
 Communication between phone and wear in a simple way by using coroutines.
+No callback & Main-Safe
 
 ## Dependencies
 ```gradle
