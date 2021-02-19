@@ -4,26 +4,23 @@ import android.icu.text.SimpleDateFormat
 import androidx.lifecycle.viewModelScope
 import com.ohyooo.demo.model.MainUIItem
 import com.ohyooo.lib.mvvm.MVVMBaseViewModel
-import com.ohyooo.network.OnMessageReceivedListener
 import com.ohyooo.network.Wessager
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.util.Date
+import java.util.*
 
 class MainViewModel : MVVMBaseViewModel() {
     val ui = MainUIItem()
 
     override fun onCreate() {
-        Wessager.addListener(object : OnMessageReceivedListener {
-            override fun onMessageReceived(msg: String, sessionId: Long) {
-                val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS")
-                val date = simpleDateFormat.format(Date(sessionId))
-                ui.payload.set("received: $msg\n$date")
-                viewModelScope.launch {
-                    Wessager.send("received", false, sessionId)
-                }
+        Wessager.addListener { msg, sessionId ->
+            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault())
+            val date = simpleDateFormat.format(Date(sessionId))
+            ui.payload.set("received: $msg\n$date")
+            viewModelScope.launch {
+                Wessager.send("received", false, sessionId)
             }
-        })
+        }
     }
 
     fun sendToWear() {

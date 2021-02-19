@@ -15,19 +15,6 @@
         android:orientation="vertical"
         tools:context=".ui.main.MainActivity">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:text="@{vm.ui.payload}"
-            android:textColor="@android:color/white" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:onClick="@{()->vm.sendMessage()}"
-            android:text="Send"
-            tools:ignore="HardcodedText" />
     </FrameLayout>
 </layout>

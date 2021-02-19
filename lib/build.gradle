@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
@@ -30,20 +29,11 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
+        jvmTarget = "1.8"
     }
-    kapt {
-        useBuildCache = true
-    }
-    androidExtensions {
-        experimental = true
-    }
-    dataBinding {
-        enabled true
-    }
-    viewBinding.enabled = true
-    dexOptions {
-        preDexLibraries = false
+    buildFeatures {
+        dataBinding true
+        viewBinding true
     }
 }
 
