@@ -1,2 +1,0 @@
-include ':app', ':lib', ':wessager', ':wear'
-rootProject.name='Wessager'
