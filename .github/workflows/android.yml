@@ -11,17 +11,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v6
 
       - name: Get Time
         id: time
-        uses: nanzm/get-time-action@v1.1
+        uses: nanzm/get-time-action@v2.0
         with:
           timeZone: 8
           format: 'YYYYMMDDHHmmss'
      
       - name: Setup JDK
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version: '11'
@@ -40,7 +40,7 @@ jobs:
         run: ./gradlew assembleRelease
 
       - name: Remove old Releases
-        uses: dev-drprasad/delete-older-releases@v0.2.0
+        uses: dev-drprasad/delete-older-releases@v0.3.4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
