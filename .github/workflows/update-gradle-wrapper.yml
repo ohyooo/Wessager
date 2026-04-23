@@ -1,0 +1,49 @@
+name: Update Gradle Wrapper
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  update-gradle-wrapper:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@main
+        with:
+          submodules: recursive
+          persist-credentials: false
+
+      - name: Setup JDK
+        uses: actions/setup-java@main
+        with:
+          distribution: 'zulu'
+          java-version: '21'
+          java-package: jdk
+          cache: 'gradle'
+
+      - name: Update Gradle Wrapper
+        uses: gradle-update/update-gradle-wrapper-action@main
+        with:
+          repo-token: ${{ secrets.ACTIONS_TRIGGER_PAT }}
+          merge-method: SQUASH
+
+      - name: Enable auto-merge for the PR (squash)
+        env:
+          GH_TOKEN: ${{ secrets.ACTIONS_TRIGGER_PAT }}
+        run: |
+          set -euo pipefail
+          # 找到本次 action 创建的 Gradle wrapper 更新 PR（按标题匹配，足够稳）
+          pr_number=$(gh pr list --state open --limit 20 \
+            --json number,title \
+            --jq '.[] | select(.title | test("(?i)gradle wrapper")) | .number' \
+            | head -n 1)
+
+          if [ -z "${pr_number:-}" ]; then
+            echo "No Gradle wrapper PR found."
+            exit 0
+          fi
+
+          echo "Found PR #$pr_number, enabling auto-merge..."
+          gh pr merge "$pr_number" --auto --squash
