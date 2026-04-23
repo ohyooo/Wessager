@@ -1,35 +1,26 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
+plugins {
+    alias(libs.plugins.android.library)
+}
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    namespace 'com.ohyooo.lib'
+    compileSdk libs.versions.compileSdk.get().toInteger()
+
     defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode rootProject.ext.versionCode
-        versionName rootProject.ext.versionName
+        minSdk libs.versions.minSdk.get().toInteger()
         consumerProguardFiles 'consumer-rules.pro'
     }
     buildTypes {
         debug {
-            minifyEnabled true
-            zipAlignEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled false
         }
         release {
-            minifyEnabled true
-            zipAlignEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled false
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     buildFeatures {
         dataBinding true
@@ -38,5 +29,9 @@ android {
 }
 
 dependencies {
-    implementation "androidx.fragment:fragment-ktx:$fragment_version"
+    api libs.androidx.appcompat
+    api libs.androidx.fragment.ktx
+    api libs.androidx.lifecycle.livedata.ktx
+    api libs.androidx.lifecycle.runtime.ktx
+    api libs.androidx.lifecycle.viewmodel.ktx
 }

@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.ohyooo.lib.mvvm.MVVMBaseActivity
 import com.ohyooo.lib.mvvm.MVVMBaseViewModel
@@ -19,7 +18,7 @@ inline fun <reified VB : ViewDataBinding> Activity.viewDataBindingOf(): VB {
 }
 
 inline fun <reified VM : ViewModel> ComponentActivity.viewModelOf(): Lazy<VM> {
-    return viewModels { MVVMViewModelFactory(this, lifecycle) }
+    return viewModels { MVVMViewModelFactory(this) }
 }
 
 fun FragmentActivity.replaceFragment(id: Int, fragment: Fragment, tag: String? = null) {
@@ -30,5 +29,5 @@ fun FragmentActivity.replaceFragment(id: Int, fragment: Fragment, tag: String? =
 }
 
 fun MVVMBaseActivity.bindBaseLiveData(vm: MVVMBaseViewModel) {
-    vm.toastLiveData.observe(this, Observer { showToast(it) })
+    vm.toastLiveData.observe(this) { showToast(it) }
 }

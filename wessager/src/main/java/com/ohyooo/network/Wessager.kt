@@ -1,7 +1,14 @@
 package com.ohyooo.network
 
 import android.util.Log
-import com.google.android.gms.wearable.*
+import com.google.android.gms.wearable.DataClient
+import com.google.android.gms.wearable.DataEvent
+import com.google.android.gms.wearable.DataEventBuffer
+import com.google.android.gms.wearable.DataMapItem
+import com.google.android.gms.wearable.PutDataMapRequest
+import com.google.android.gms.wearable.PutDataRequest
+import com.google.android.gms.wearable.Wearable
+import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -35,14 +42,14 @@ object Wessager : DataClient.OnDataChangedListener {
     ): String? = withContext(Dispatchers.IO) {
         val resp = withTimeoutOrNull(timeout) {
             var result: String? = null
-            val mutex = Mutex(waitResponse)
+            val mutex = Mutex(locked = waitResponse)
             if (waitResponse) {
                 register[sessionId] = {
                     result = it
                     mutex.unlock()
                 }
             }
-            Wearable.getDataClient(context).putDataItem(getRequest(msg, sessionId, timeout))
+            Wearable.getDataClient(context).putDataItem(getRequest(msg, sessionId, timeout)).await()
             mutex.withLock { result }
         }
         if (resp == null && waitResponse) {
@@ -70,10 +77,10 @@ object Wessager : DataClient.OnDataChangedListener {
                         Log.e("Wessager", String.format("received expired: sessionId=%s", sessionId))
                         return
                     }
-                    val payload = getString(Constants.PAYLOAD)
+                    val payload = getString(Constants.PAYLOAD) ?: return@apply
                     Log.e("Wessager", String.format("received: sessionId=%s payload=%s", sessionId, payload))
                     if (register.containsKey(sessionId)) {
-                        register[sessionId]!!.invoke(payload)
+                        register[sessionId]?.invoke(payload)
                         register.remove(sessionId)
                     } else {
                         broadcastMessage(payload, sessionId)

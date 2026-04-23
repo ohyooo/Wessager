@@ -10,7 +10,7 @@ class ContextInitializer : Initializer<Unit> {
 
     override fun dependencies() = emptyList<Class<Initializer<*>>>()
 
-    companion object{
-        lateinit var context:Context
+    companion object {
+        lateinit var context: Context
     }
 }

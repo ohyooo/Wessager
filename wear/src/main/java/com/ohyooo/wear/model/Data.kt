@@ -1,14 +1,10 @@
 package com.ohyooo.wear.model
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
 import org.json.JSONObject
 
-@Parcelize
-data class Header(var timestamp: Long = System.currentTimeMillis(), val headers: HashMap<String, String> = HashMap()) : Parcelable
+data class Header(var timestamp: Long = System.currentTimeMillis(), val headers: HashMap<String, String> = HashMap())
 
-@Parcelize
-data class Data(var header: Header = Header(), var body: String? = null) : Parcelable {
+data class Data(var header: Header = Header(), var body: String? = null) {
     fun toJson(): String {
         val headerObj = JSONObject()
         headerObj.put(header::timestamp.name, header.timestamp)

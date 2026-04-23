@@ -14,7 +14,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
-        Wessager.init(this, Type.PHONE)
+        Wessager.init(Type.PHONE)
     }
 
     companion object {

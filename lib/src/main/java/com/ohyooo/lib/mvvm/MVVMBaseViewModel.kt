@@ -17,13 +17,13 @@ abstract class MVVMBaseViewModel : ViewModel(), MVVMLifecycle {
     /**
      * Lifecycle Start
      */
-    override fun onCreate() {}
+    override fun onCreate() = Unit
 
-    override fun onPause() {}
+    override fun onPause() = Unit
 
-    override fun onResume() {}
+    override fun onResume() = Unit
 
-    override fun onDestroy() {}
+    override fun onDestroy() = Unit
     /**
      * Lifecycle End
      */

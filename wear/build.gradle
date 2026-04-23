@@ -1,37 +1,32 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
+plugins {
+    alias(libs.plugins.android.application)
+}
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    namespace 'com.ohyooo.wear'
+    compileSdk libs.versions.compileSdk.get().toInteger()
+
     defaultConfig {
-        applicationId rootProject.ext.applicationId
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode rootProject.ext.versionCode
-        versionName rootProject.ext.versionName
+        applicationId 'com.ohyooo.wear'
+        minSdk libs.versions.minSdk.get().toInteger()
+        targetSdk libs.versions.targetSdk.get().toInteger()
+        versionCode libs.versions.appVersionCode.get().toInteger()
+        versionName libs.versions.appVersionName.get()
     }
     buildTypes {
         debug {
-            minifyEnabled true
-            zipAlignEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled false
+            shrinkResources false
         }
         release {
             minifyEnabled true
-            zipAlignEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     buildFeatures {
         dataBinding true
@@ -42,10 +37,7 @@ android {
 dependencies {
     implementation project(':lib')
     implementation project(':wessager')
-    compileOnly "com.google.android.wearable:wearable:$wearable_version"
-    implementation "com.google.android.gms:play-services-wearable:$gms_wearable_version"
-    //
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    //
-    implementation 'com.jakewharton.timber:timber:4.7.1'
+    compileOnly libs.google.wearable
+    implementation libs.google.play.services.wearable
+    implementation libs.timber
 }

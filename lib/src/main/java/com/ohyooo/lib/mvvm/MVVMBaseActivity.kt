@@ -2,11 +2,11 @@ package com.ohyooo.lib.mvvm
 
 import android.os.Bundle
 import androidx.annotation.LayoutRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.fragment.app.FragmentActivity
 
-abstract class MVVMBaseActivity(@LayoutRes val layoutId: Int) : FragmentActivity() {
+abstract class MVVMBaseActivity(@param:LayoutRes val layoutId: Int) : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

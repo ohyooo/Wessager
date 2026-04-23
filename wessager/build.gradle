@@ -1,41 +1,32 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
+plugins {
+    alias(libs.plugins.android.library)
+}
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    namespace 'com.ohyooo.network'
+    compileSdk libs.versions.compileSdk.get().toInteger()
+
     defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode rootProject.ext.versionCode
-        versionName rootProject.ext.versionName
+        minSdk libs.versions.minSdk.get().toInteger()
         consumerProguardFiles 'consumer-rules.pro'
     }
     buildTypes {
         debug {
-            minifyEnabled true
-            zipAlignEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled false
         }
         release {
-            minifyEnabled true
-            zipAlignEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled false
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 }
 
 dependencies {
-    implementation "androidx.startup:startup-runtime:1.0.0"
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2'
-    //
-    implementation "com.google.android.gms:play-services-wearable:$gms_wearable_version"
+    implementation libs.androidx.startup.runtime
+    implementation libs.kotlinx.coroutines.android
+    implementation libs.kotlinx.coroutines.play.services
+    implementation libs.google.play.services.wearable
 }
