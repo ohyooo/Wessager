@@ -13,42 +13,15 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Get Time
-        id: time
-        uses: nanzm/get-time-action@v2.0
-        with:
-          timeZone: 8
-          format: 'YYYYMMDDHHmmss'
-     
       - name: Setup JDK
         uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
-          java-version: '11'
+          java-version: '21'
           java-package: jdk
           
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Update dependencies
-        run: ./gradlew update
-
-      - name: Push Changes
-        run: git config --global user.email "i@ohyooo.com" && git config --global user.name "ohyooo" && git add . && git commit -m "auto update" && git push || true
-
       - name: Build APK
         run: ./gradlew assembleRelease
-
-      - name: Remove old Releases
-        uses: dev-drprasad/delete-older-releases@v0.3.4
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          keep_latest: 3
-          delete_tags: true
-
-      - name: Delete workflow runs
-        uses: GitRML/delete-workflow-runs@main
-        with:
-          retain_days: 3
-          keep_minimum_runs: 2
