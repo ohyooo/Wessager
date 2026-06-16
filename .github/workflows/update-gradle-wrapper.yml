@@ -15,6 +15,9 @@ jobs:
           submodules: recursive
           persist-credentials: false
 
+      - name: Set permission
+        run: chmod +x gradlew
+
       - name: Setup JDK
         uses: actions/setup-java@main
         with:
